@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROCK , PAPER , SCISSORS GAME</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&amp;display=swap" rel="stylesheet">
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Space Grotesk", sans-serif;
+        }
+
+        body {
+            background-image: url("https://img.freepik.com/premium-photo/dark-background-with-dark-black-background-with-white-line-that-says-no_1198107-169889.jpg?w=740");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            color: #fff;
+        }
+
+        .center-content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            flex-direction: column;
+        }
+
+        .playAgain,
+        .winnerImage {
+            margin: 10px 0;
+        }
+
+
+        @keyframes zoomInOut {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.5);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .winnerImage {
+            display: none;
+            width: 200px;
+            object-fit: cover;
+            margin-top: 30px;
+            animation: zoomInOut 2s infinite;
+        }
+
+        .message {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .message img {
+            width: 50%;
+            object-fit: cover;
+        }
+
+        .images {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            text-align: center;
+            height: 180px;
+        }
+
+        .computer img,
+        .player img {
+            width: 75%;
+        }
+
+        .shakeComputer {
+            animation: shakeComputer 0.8s linear;
+        }
+
+        .shakePlayer {
+            animation: shakePlayer 0.8s linear;
+        }
+
+        .points {
+            margin: 2em;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .computerPoints {
+            margin-left: 3em;
+        }
+
+        .playerPoints {
+            margin-right: 3em;
+        }
+
+        .options {
+            margin-top: 3em;
+            display: flex;
+            justify-content: space-around;
+            gap: 5px;
+        }
+
+        .options:hover .option-wrapper:not(:hover) {
+            opacity: 0.5;
+            transform: scale(0.9);
+        }
+
+        .option-wrapper {
+            transform: 0.2s;
+        }
+
+        .options button {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s;
+            /* transition: 0.2s all linear; */
+            font-size: 17px;
+            width: 150px;
+            text-align: center;
+            padding: 1em;
+            background: none;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .options button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 30px;
+            padding: 2px;
+            background: linear-gradient(orange, red);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            z-index: -1;
+        }
+
+
+        .options button:hover {
+            background: linear-gradient(orange, red);
+        }
+
+        @keyframes shakeComputer {
+            0% {
+                transform: rotate(-30deg);
+            }
+
+            25% {
+                transform: rotate(30deg);
+            }
+
+            50% {
+                transform: rotate(-30deg);
+            }
+
+            75% {
+                transform: rotate(30deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        @keyframes shakePlayer {
+            0% {
+                transform: rotate(30deg);
+            }
+
+            25% {
+                transform: rotate(-30deg);
+            }
+
+            50% {
+                transform: rotate(30deg);
+            }
+
+            75% {
+                transform: rotate(-30deg);
+            }
+
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .resultMessage {
+            margin-top: 2em;
+            margin-bottom: 2em;
+            text-align: center;
+        }
+
+        .playAgain {
+            cursor: pointer;
+            outline: none;
+            transition: 0.2s all linear;
+            font-size: 17px;
+            width: 150px;
+            text-align: center;
+            margin: auto;
+            padding: 1em;
+            background: none;
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .playAgain::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 30px;
+            padding: 2px;
+            background: linear-gradient(orange, red);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            z-index: -1;
+        }
+
+        .playAgain:hover {
+            background: linear-gradient(orange, red);
+        }
+
+        .text img {
+            object-fit: cover;
+            width: 60%;
+        }
+
+        .gameOverText {
+            display: none;
+        }
+
+        @media only screen and (max-width:768px) {
+            .playAgain {
+                font-size: 18px;
+            }
+
+            .options button {
+                font-size: 18px;
+            }
+        }
+
+        @media only screen and (max-width:412px) {
+            .container {
+    margin-top: 40%;
+  
+}
+            .playAgain {
+                font-size: 18px;
+            }
+
+            .options button {
+                font-size: 18px;
+                width: 100%;
+            }
+
+            .message img {
+                width: 80%;
+            }
+        }
+
+        @media only screen and (max-width:375px) {
+            .computerPoints {
+                margin-left: 2em;
+            }
+        }
+   
+        .menu-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .menu-button:hover {
+      background-color: #555;
+    }
+  </style>
+</head>
+<body>
+    
+
+    <a href="/select.html" class="menu-button">☰</a>
+    <div class="container">
+        <div class="message">
+            <img src="heading.png" alt="">
+        </div>
+        <div class="images">
+            <div class="computer">
+                <img src="rockComputer.png" />
+            </div>
+            <div class="text">
+                <img src="vs.png" alt="">
+            </div>
+            <div class="player">
+                <img src="rockPlayer.png" />
+            </div>
+        </div>
+        <div class="points">
+            COMPUTER <span class="computerPoints">0</span> /
+            <span class="playerPoints">0</span> PLAYER
+        </div>
+        <div class="options">
+            <div class="option-wrapper">
+                <button type="button">ROCK</button>
+            </div>
+            <div class="option-wrapper">
+                <button type="button">PAPER</button>
+            </div>
+            <div class="option-wrapper">
+                <button type="button">SCISSORS</button>
+            </div>
+        </div>
+        <div class="resultMessage"></div>
+        <div class="center-content">
+            <img src="playerwins (2).png" class="winnerImage playerWins" style="display: none;" />
+            <img src="computerwins.png" class="winnerImage computerWins" style="display: none;" />
+            <img src="draw.png" class="winnerImage drawImage" style="display: none;" />
+            <div class="gameOverText">Game Over!</div>
+            <button class="playAgain" style="display:none;">PLAY AGAIN</button>
+        </div>
+
+        <script>
+            const computer = document.querySelector(".computer img");
+            const player = document.querySelector(".player img");
+            const computerPoints = document.querySelector(".computerPoints");
+            const playerPoints = document.querySelector(".playerPoints");
+            const options = document.querySelectorAll(".options button");
+            const resultMessage = document.querySelector(".resultMessage");
+            const playAgainBtn = document.querySelector(".playAgain");
+            const playerWinsImg = document.querySelector(".playerWins"); // Player Wins image
+            const computerWinsImg = document.querySelector(".computerWins"); // Computer Wins image
+            const drawImg = document.querySelector(".drawImage"); // Draw image
+            const gameOverText = document.querySelector(".gameOverText");
+
+            let roundCount = 0;
+
+            options.forEach((option) => {
+                option.addEventListener("click", () => {
+                    if (roundCount < 10) {  // End game after 10 rounds
+                        computer.classList.add("shakeComputer");
+                        player.classList.add("shakePlayer");
+
+                        setTimeout(() => {
+                            computer.classList.remove("shakeComputer");
+                            player.classList.remove("shakePlayer");
+
+                            player.src = "./" + option.innerHTML + "Player.png";
+
+                            const choice = ["ROCK", "PAPER", "SCISSORS"];
+                            let arrayNo = Math.floor(Math.random() * 3);
+                            let computerChoice = choice[arrayNo];
+                            computer.src = "./" + computerChoice + "Computer.png";
+
+                            let cPoints = parseInt(computerPoints.innerHTML);
+                            let pPoints = parseInt(playerPoints.innerHTML);
+
+                            resultMessage.innerHTML = "";
+
+                            if (option.innerHTML === computerChoice) {
+                                resultMessage.innerHTML = "You both choose the same, it's a tie!";
+                            } else if (option.innerHTML === "ROCK") {
+                                if (computerChoice === "PAPER") {
+                                    computerPoints.innerHTML = cPoints + 1;
+                                } else if (computerChoice === "SCISSORS") {
+                                    playerPoints.innerHTML = pPoints + 1;
+                                }
+                            } else if (option.innerHTML === "PAPER") {
+                                if (computerChoice === "SCISSORS") {
+                                    computerPoints.innerHTML = cPoints + 1;
+                                } else if (computerChoice === "ROCK") {
+                                    playerPoints.innerHTML = pPoints + 1;
+                                }
+                            } else if (option.innerHTML === "SCISSORS") {
+                                if (computerChoice === "ROCK") {
+                                    computerPoints.innerHTML = cPoints + 1;
+                                } else if (computerChoice === "PAPER") {
+                                    playerPoints.innerHTML = pPoints + 1;
+                                }
+                            }
+
+                            roundCount++;
+
+                            if (roundCount === 10) {  // After 10 rounds
+                                options.forEach((btn) => btn.disabled = true);
+                                playAgainBtn.style.display = "block";
+                                gameOverText.style.display = "block";
+
+                                let finalCPoints = parseInt(computerPoints.innerHTML);
+                                let finalPPoints = parseInt(playerPoints.innerHTML);
+
+                                resultMessage.style.display = "none"; // Hide result message text
+
+                                if (finalPPoints > finalCPoints) {
+                                    playerWinsImg.style.display = "block"; // Show player wins image
+                                } else if (finalCPoints > finalPPoints) {
+                                    computerWinsImg.style.display = "block"; // Show computer wins image
+                                } else {
+                                    drawImg.style.display = "block"; // Show draw image
+                                }
+                            }
+                        }, 900);
+                    }
+                });
+            });
+
+            // Event listener for Play Again button
+            playAgainBtn.addEventListener("click", () => {
+                roundCount = 0;
+                computerPoints.innerHTML = "0";
+                playerPoints.innerHTML = "0";
+                resultMessage.innerHTML = "";
+                options.forEach((btn) => btn.disabled = false);
+                playAgainBtn.style.display = "none";
+                gameOverText.style.display = "none";
+                playerWinsImg.style.display = "none"; // Hide player wins image
+                computerWinsImg.style.display = "none"; // Hide computer wins image
+                drawImg.style.display = "none"; // Hide draw image
+            });
+        </script>
+</body>
+
+</html>

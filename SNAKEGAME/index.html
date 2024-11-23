@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - youtube.com/codingnepal -->
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Snake Game </title>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <style>
+    .navbar {
+            width: 100%;
+            padding: 10px 10px;
+            background-color: #212837;
+            color: #f9f6f2;
+            font-size: 1.5em;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+        }
+        .navbar .menu-icon {
+            font-size: 1.5em;
+            cursor: pointer;
+            padding-right: 5%;
+        }
+
+        .navbar .menu-icon a{
+            text-decoration: none;
+            color: white;
+        }
+</style>
+</head>
+<body>
+      <script src="script.js" defer></script>
+      <div class="navbar">
+        <div>Snake Game</div>
+        <div class="menu-icon"><a href="/select.html">☰</a></div>
+    </div>
+ <div class="whole-body">
+    <div class="wrapper">
+      <div class="game-details">
+        <span class="score">Score: 0</span>
+        <span class="high-score">High Score: 0</span>
+      </div>
+      <div class="play-board"></div>
+      <div class="controls">
+        <i data-key="ArrowLeft" id="left-arrow" class="fa-solid fa-arrow-left-long"></i>
+        <i data-key="ArrowUp" id="up-arrow"class="fa-solid fa-arrow-up-long"></i>
+        <i data-key="ArrowRight" id="right-arrow" class="fa-solid fa-arrow-right-long"></i>
+        <i data-key="ArrowDown" id="down-arrow" class="fa-solid fa-arrow-down-long"></i>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>

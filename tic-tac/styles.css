@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: "Exo 2", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('new.jpeg'); 
+    background-size: cover; 
+    background-position: center; 
+  }
+  
+
+  .container {
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.2); 
+    padding: 20px;
+    border-radius: 15px; 
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3); 
+    backdrop-filter: blur(15px); 
+    border: 1px solid rgba(255, 255, 255, 0.3); 
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  
+  .board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    width: 315px;
+    margin: 0 auto;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .cell {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+    border: 2px solid #333;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cell:hover {
+    background-color: #f2f2f2;
+  }
+  
+  #game-status {
+    margin: 20px 0;
+    color: #fff;
+  }
+  
+  button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: linear-gradient(90deg, #8A2BE2, #00008B);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border-radius: 20px;
+  }
+  
+  button:hover {
+    background: linear-gradient(90deg, #00008B, #8A2BE2);
+  }
+  
+  @media screen and (max-width: 300px) {
+    .board {
+      width: 253px;
+    }
+    
+    .cell {
+      width: 80px;
+      height: 80px;
+    }
+  }
+  

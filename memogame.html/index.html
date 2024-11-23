@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game</title>
+    <style>
+        /* General Reset */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        #backgroundVideo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        #game {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Game Grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 3rem;
+            justify-content: center;
+            padding: 20px;
+            max-width: 960px;
+            max-height: 595px;
+            margin: 0 auto;
+        }
+
+        .card {
+            width: 150px;
+            height: 150px;
+            position: relative;
+            perspective: 1000px;
+            cursor: pointer;
+            transition: all 0.4s linear;
+            transform-style: preserve-3d;
+        }
+
+        .BTN {
+            display: flex;
+        }
+
+        .front,
+        .back {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+        }
+
+        .front {
+            background: url('https://media.istockphoto.com/id/1488184544/photo/neon-purple-brick-wall-texture-for-pattern-background-abstract-architectural-wide-panorama.jpg?s=612x612&w=0&k=20&c=uJ4tx6H0GiTZGJqg-gwd-f-xdr9zXdKYErm6Uklgnbs=') no-repeat center center / cover;
+            border-radius: 20px;
+        } 
+
+        /* .front {
+            background: url('IMAGES/bg.jpeg') no-repeat center center / cover;
+            border-radius: 20px;
+        } */
+        .back {
+            transform: rotateY(180deg);
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
+
+        .selected {
+            transform: rotateY(180deg);
+        }
+
+        .match {
+            visibility: hidden;
+        }
+
+        /* Buttons */
+        .button,
+        #resetButton,
+        #levels,
+        .timer-button,
+        .sound-button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+            color: white;
+            background: linear-gradient(135deg, #02142e, #2f46c5);
+            text-align: center;
+            text-decoration: none;
+        }
+
+    
+        option {
+            background-color: #02142e;
+        }
+        .menu-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .menu-button:hover {
+      background-color: #555;
+    }
+
+    
+  </style>
+</head>
+<body>
+  <a href="/select.html" class="menu-button">Menu</a>
+
+    <video id="backgroundVideo" autoplay loop muted>
+        <source src="IMAGES/bf03357633894926afd3dc6d00182260_preview.mp4" type="video/mp4">
+       
+    </video>
+
+    <div id="game">
+        <div class="BTN">
+            <div class="buttons">
+                <a href="index.html"><button class="button menu-button" style="display: none;">Menu</button></a>
+            </div>
+            <button class="button" id="resetButton">Reset</button>
+            <div class="button-container">
+                <button onclick="toggleSound()" class="sound-button" id="soundButton" aria-label="Toggle sound">Sound:
+                    Off</button>
+            </div>
+            <div id="movesButton" class="timer-button">Moves: 8</div>
+            <select id="levels">
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+                
+            </select>
+        </div>
+    </div>
+
+    <section class="grid"></section>
+
+    <!-- Audio Element -->
+    <audio id="buttonSound" src="virtual-memory-uplifting-gaming-synthwave-199942.mp3"></audio>
+    
+
+    <script>
+        'use strict';
+
+        const cardsArray = [
+            { 'name': 'FACEBOOK', 'img': 'IMAGES/facebook.svg' },
+            { 'name': 'LINKEDIN', 'img': 'IMAGES/linkedin.svg' },
+            { 'name': 'PINTEREST', 'img': 'IMAGES/pinterest.svg' },
+            { 'name': 'SKYPE', 'img': 'IMAGES/skype.svg' },
+            { 'name': 'YAHOO', 'img': 'IMAGES/yahoo.svg' },
+            { 'name': 'YOUTUBE', 'img': 'IMAGES/youtube.svg' },
+            { 'name': 'TWITTER', 'img': 'IMAGES/twitter.svg' },
+            { 'name': 'SNAPCHAT', 'img': 'IMAGES/snapchat.svg' },
+            { 'name': 'WHATSAPP', 'img': 'IMAGES/whatsapp.svg' },
+            
+            
+           
+        ];
+           
+
+        const DIFFICULTY_SETTINGS = {
+            Easy: { pairs: 2, moves: 8 },
+            Medium: { pairs: 3, moves: 10 },
+            Hard: { pairs: 6, moves: 20 },
+          
+        };
+
+        let gameGrid = [];
+        let firstGuess = '';
+        let secondGuess = '';
+        let count = 0;
+        let previousTarget = null;
+        let movesRemaining = 0;
+        const delay = 1200;
+
+        const grid = document.querySelector('.grid');
+        const resetButton = document.getElementById('resetButton');
+        const movesButton = document.getElementById('movesButton');
+        const levelsDropdown = document.getElementById('levels');
+        const buttonSound = document.getElementById("buttonSound");
+        const soundButton = document.getElementById("soundButton");
+
+        const initializeGame = () => {
+            grid.innerHTML = '';
+            count = 0;
+            previousTarget = null;
+
+            const selectedLevel = levelsDropdown.value;
+            const { pairs, moves } = DIFFICULTY_SETTINGS[selectedLevel];
+
+            movesRemaining = moves;
+            gameGrid = cardsArray.slice(0, pairs).concat(cardsArray.slice(0, pairs)).sort(() => 0.5 - Math.random());
+
+            updateMovesDisplay();
+
+            
+
+            gameGrid.forEach(item => {
+                const card = document.createElement('div');
+                card.classList.add('card');
+                card.dataset.name = item.name;
+
+                const front = document.createElement('div');
+                front.classList.add('front');
+
+                const back = document.createElement('div');
+                back.classList.add('back');
+                back.style.backgroundImage = `url(${item.img})`;
+
+                grid.appendChild(card);
+                card.appendChild(front);
+                card.appendChild(back);
+            });
+        };
+
+        const updateMovesDisplay = () => {
+            movesButton.textContent = `Moves: ${movesRemaining}`;
+        };
+
+        const matchCards = () => {
+            const selected = document.querySelectorAll('.selected');
+            selected.forEach(card => {
+                card.classList.add('match');
+            });
+            checkForWin();
+        };
+        
+
+        const resetGuesses = () => {
+            firstGuess = '';
+            secondGuess = '';
+            count = 0;
+            previousTarget = null;
+
+            setTimeout(() => {
+                const selected = document.querySelectorAll('.selected');
+                selected.forEach(card => {
+                    card.classList.remove('selected');
+                });
+            }, delay);
+        };
+
+        const handleCardClick = (clicked) => {
+            if (
+                clicked.nodeName === 'SECTION' ||
+                clicked === previousTarget ||
+                clicked.parentNode.classList.contains('selected') ||
+                clicked.parentNode.classList.contains('match')
+            ) return;
+
+            count++;
+            if (count === 1) {
+                firstGuess = clicked.parentNode.dataset.name;
+                clicked.parentNode.classList.add('selected');
+            } else {
+                secondGuess = clicked.parentNode.dataset.name;
+                clicked.parentNode.classList.add('selected');
+
+                if (firstGuess === secondGuess) {
+                    setTimeout(matchCards, delay);
+                }
+                setTimeout(resetGuesses, delay);
+            }
+
+            previousTarget = clicked;
+            movesRemaining--;
+            updateMovesDisplay();
+
+            if (movesRemaining <= 0) {
+                setTimeout(() => alert('Game over! Resetting the game.'), delay);
+                setTimeout(initializeGame, delay + 500);
+            }
+        };
+
+        grid.addEventListener('click', event => handleCardClick(event.target));
+        resetButton.addEventListener('click', initializeGame);
+        levelsDropdown.addEventListener('change', initializeGame);
+        // soundButton.addEventListener('click', () => {
+        //     if (buttonSound.paused) {
+        //         buttonSound.play();
+        //         soundButton.textContent = 'Sound: On';
+        //     } else {
+        //         buttonSound.pause();
+        //         soundButton.textContent = 'Sound: Off';
+        //     }
+        // });
+
+        let isSoundOn = false;
+
+soundButton.addEventListener('click', () => {
+    isSoundOn = !isSoundOn;
+    buttonSound[isSoundOn ? 'play' : 'pause']();
+    soundButton.textContent = `Sound: ${isSoundOn ? 'On' : 'Off'}`;
+});
+// Function to check if all cards are matched and display a win message
+const checkForWin = () => {
+    const matchedCards = document.querySelectorAll('.match');
+    if (matchedCards.length === gameGrid.length) {
+        setTimeout(() => {
+            alert('You won! Now try the next level.');
+            moveToNextLevel();
+        }, delay);
+    }
+};
+
+// Function to move to the next level
+const moveToNextLevel = () => {
+    const levelOrder = ['Easy', 'Medium', 'Hard', 'Extreme'];
+    const currentLevel = levelsDropdown.value;
+    const nextLevel = levelOrder[(levelOrder.indexOf(currentLevel) + 1) % levelOrder.length];
+    levelsDropdown.value = nextLevel;
+    initializeGame();
+};
+
+
+
+
+        initializeGame();
+
+    </script>
+</body>
+
+</html>

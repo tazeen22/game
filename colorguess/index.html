@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>color-guess</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .menu-button {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 30px;
+        text-align: center;
+      }
+    </style>
+</head>
+<body>
+    
+
+    <a href="/select.html" class="menu-button">☰</a>
+    <h1>The RGB Color Guessing Game
+        <br> 
+        <span id="colorDisplay">RGB</span>
+    </h1>
+    
+    <div id="stripe">
+        <button id="reset">New Colors</button>
+        <span id="message"></span>
+        <button id="easyButton">Easy</button>
+        <button id="hardButton" class="selected">Hard</button>
+    </div>
+
+    <div id="container">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+    </div>
+<!-- Background Audio -->
+<audio id="bgAudio" loop>
+    <source src="/music.mp3" type="audio/mp3">
+    Your browser does not support the audio tag.
+</audio>
+
+<script>
+// Sound control button and audio element
+const soundBtn = document.getElementById('soundBtn');
+const bgAudio = document.getElementById('bgAudio');
+
+// Check for sound state in localStorage
+const setSoundState = () => {
+    const soundState = localStorage.getItem('soundState');
+    if (soundState === 'off') {
+        bgAudio.pause();
+        soundBtn.textContent = '🔊 ';
+    } else {
+        bgAudio.play();
+        soundBtn.textContent = '🔇 ';
+    }
+};
+
+// Set initial sound state
+setSoundState();
+
+// Toggle sound on button click and save state
+soundBtn.addEventListener('click', () => {
+    if (bgAudio.paused) {
+        bgAudio.play();
+        soundBtn.textContent = '🔇';
+        localStorage.setItem('soundState', 'on');
+    } else {
+        bgAudio.pause();
+        soundBtn.textContent = '🔊 ';
+        localStorage.setItem('soundState', 'off');
+    }
+});
+</script>
+
+
+    <script src="script.js"></script>
+</body>
+</html>

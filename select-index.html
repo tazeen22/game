@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUNSPOT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        /* Styles here */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+            position: relative;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #f9f9f9;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .top-bar h3 {
+            margin: 0;
+            margin-right: 20px;
+            font-size: 16px;
+        }
+
+        .top-bar button {
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .top-bar button:hover {
+            background-color: #0056b3;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 30px;
+            background-color: rgba(51, 51, 51, 0.8);
+            color: #fff;
+            position: relative;
+            z-index: 10;
+            height: 80px;
+        }
+
+        .navbar .left, .navbar .right {
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar .left button, .navbar .right button {
+            background: none;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+
+        .navbar .right img {
+            height: 40px;
+        }
+
+        .logo {
+            height: 180px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        #bgVideo {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            transform: translate(-50%, -50%);
+            object-fit: cover;
+        }
+
+        .control-buttons {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 11;
+            display: flex;
+            gap: 20px;
+        }
+
+        .control-buttons button {
+            padding: 15px 25px;
+            font-size: 18px;
+            color: #fff;
+            background-color: rgba(51, 51, 51, 0.8);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .control-buttons button:hover {
+            background-color: rgba(51, 51, 51, 1);
+        }
+
+        #userIcon {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    gap: 10px;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+    flex-direction: column;
+}
+
+        #userIcon img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        @media (max-width:768px) {
+            #userIcon {
+    display: flex
+;
+    align-items: center;
+    position: absolute;
+    top: 25px;
+    right: 2px;
+    background: none;
+    /* gap: 0px; */
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+    flex-direction: column;
+    /* flex-wrap: wrap; */
+}
+
+            .navbar .left button, .navbar .right button {
+                font-size: 20px;
+            }
+        }
+
+        /* Media Queries for Responsiveness */
+  @media (max-width: 1024px) {
+    .card-container {
+      grid-template-columns: repeat(3, 1fr); /* Adjust to 3 columns */
+    }
+
+    .card {
+      width: 180px;
+      height: 140px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .card-container {
+      grid-template-columns: repeat(2, 1fr); /* Adjust to 2 columns */
+    }
+
+    .card {
+      width: 160px;
+      height: 120px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 20px;
+    }
+
+    .back-button, .sound-btn {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+
+    .card-container {
+      grid-template-columns: 1fr 1fr ; 
+    }
+
+    .card {
+      width: 100%;
+      max-width: 250px;
+      height: 150px;
+    }
+  }
+  body {
+    /* display: flex; */
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    /* background-image: url('2nd bg.png'); Add your background image URL here */
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+    position: relative;
+  }
+
+  .back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 8px 16px;
+    background-color: rgba(51, 51, 51, 0.7);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+
+  .back-button:hover {
+    background-color: rgba(85, 85, 85, 0.7);
+  }
+
+  h2 {
+    margin: 20px 0;
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  }
+
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+
+  .card {
+    position: relative;
+    width: 200px;
+    height: 150px;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s;
+  }
+
+  .card:hover img {
+    transform: scale(1.1);
+  }
+
+  .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .play-button::before {
+    content: "▶";
+    font-size: 18px;
+    color: white;
+  }
+
+  .select{
+    margin: auto;
+  }
+    </style>
+</head>
+<body>
+
+    <video id="bgVideo" autoplay muted loop>
+        <source src="/bg-light.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <audio id="bgAudio" loop>
+        <source src="music.mp3" type="audio/mp3">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <nav class="navbar">
+        <img src="funspot (2).png" alt="Logo" class="logo">
+        <div class="right">
+            <a href="index.html" class="back-button">Back</a>
+            <button id="soundBtn">🔊</button>
+            <button id="modeSwitch" class="modeSwitch">🌞</button>
+            <div id="userIcon">
+                <i class="fas fa-user"></i>  <!-- This will display the user icon -->
+
+                <span id="usernameText"></span>
+                <button id="logOutbtn" onclick="logoutUser()">Logout</button>
+            </div>
+        </div>
+    </nav>
+    <div class="select">
+    <h2>Select a Game</h2>
+    <div class="card-container">
+        <!-- 10 clickable card images with play button -->
+        <div class="card">
+          <a href="guessbyemoji.html/index.html">
+            <img src="guessbyemoji.html/guess.png" alt="Card 1">
+            <div class="play-button"></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="2048game.html/index.html">
+            <img src="2048game.html/2048.jpeg" alt="Card 2">
+            <div class="play-button"></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="maze.html/index.html">
+            <img src="maze.html/maze.png" alt="Card 3">
+            <div class="play-button"></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="SNAKEGAME/index.html">
+            <img src="SNAKEGAME/gamesnake.jpeg" alt="Card 4">
+            <div class="play-button"></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="/paint/index.html">
+            <img src="/paint/logo.png" alt="Card 5">
+            <div class="play-button"></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="tic-tac/index.html">
+            <img src="/tic-tac/tictac.jpeg" alt="Card 6">
+            <div class="play-button"></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="/scramble/index.html">
+            <img src="/scramble/scramble-logo.png" alt="Card 7">
+            <div class="play-button"></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="/rock-paper/index.html">
+            <img src="/rock-paper/logo-paper.png" alt="Card 8">
+            <div class="play-button"></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="piano/index.html">
+            <img src="piano/logo-piano.jpeg" alt="Card 9">
+            <div class="play-button"></div>
+          </a>
+        </div>
+        <div class="card">
+          <a href="/colorguess/index.html">
+            <img src="/colorguess/color-logo.jpeg" alt="Card 10">
+            <div class="play-button"></div>
+          </a>
+        </div>
+      </div>
+      </div>
+      
+    
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+    <script>
+        const bgVideo = document.getElementById('bgVideo');
+        const bgAudio = document.getElementById('bgAudio');
+        const modeSwitch = document.getElementById('modeSwitch');
+        const soundBtn = document.getElementById('soundBtn');
+    
+        function setBackgroundVideo() {
+            bgVideo.src = document.body.classList.contains('dark-mode') ? '/bg-dark.mp4' : '/bg-light.mp4';
+            bgVideo.load();
+        }
+    
+        setBackgroundVideo();
+        window.addEventListener('resize', setBackgroundVideo);
+    
+        const setSoundState = () => {
+            const soundState = localStorage.getItem('soundState');
+            if (soundState === 'off') {
+                bgVideo.muted = true;
+                bgAudio.pause();
+                soundBtn.textContent = '🔊';
+            } else {
+                bgVideo.muted = false;
+                bgAudio.play();
+                soundBtn.textContent = '🔇';
+            }
+        };
+    
+        setSoundState();
+    
+        modeSwitch.addEventListener('click', () => {
+            const isDarkMode = document.body.classList.toggle('dark-mode');
+            modeSwitch.textContent = isDarkMode ? '🌙' : '🌞';
+            setBackgroundVideo();
+        });
+    
+        soundBtn.addEventListener('click', () => {
+            if (bgVideo.muted && bgAudio.paused) {
+                bgVideo.muted = false;
+                bgAudio.play();
+                soundBtn.textContent = '🔊';
+                localStorage.setItem('soundState', 'on');
+            } else {
+                bgVideo.muted = true;
+                bgAudio.pause();
+                soundBtn.textContent = '🔇';
+                localStorage.setItem('soundState', 'off');
+            }
+        });
+    
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQEJc9Z2BJ3wc3KWYPMjUUuYirpAsr2MU",
+            authDomain: "funspot-game.firebaseapp.com",
+            projectId: "funspot-game",
+            storageBucket: "funspot-game.appspot.com",
+            messagingSenderId: "941617410081",
+            appId: "1:941617410081:web:3ac5f684bdf9c910f7b360"
+        };
+    
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    
+        document.addEventListener("DOMContentLoaded", () => {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    loadUserProfile(user.uid);
+                } else {
+                    window.location.href = "user.html";
+                }
+            });
+        });
+    
+        function loadUserProfile(uid) {
+            const userRef = db.collection("users").doc(uid);
+            userRef.get().then(doc => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    const usernameText = document.getElementById("usernameText");
+    
+                    if (userData.username) {
+                        usernameText.textContent = userData.username;
+                    }
+                }
+            });
+        }
+    
+        function logoutUser() {
+            auth.signOut().then(() => {
+                window.location.href = "login.html";
+            });
+        }
+    </script>
+    
+</body>
+</html>

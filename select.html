@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>select a game</title>
+<style>
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-image: url('2nd bg.png'); /* Add your background image URL here */
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+    position: relative;
+  }
+
+  .back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 8px 16px;
+    background-color: rgba(51, 51, 51, 0.7);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+
+  .back-button:hover {
+    background-color: rgba(85, 85, 85, 0.7);
+  }
+
+  h2 {
+    margin: 20px 0;
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.7);
+  }
+
+  .card-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+
+  .card {
+    position: relative;
+    width: 200px;
+    height: 150px;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+    transition: transform 0.3s;
+  }
+
+  .card:hover img {
+    transform: scale(1.1);
+  }
+
+  .play-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 30px;
+    height: 30px;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .play-button::before {
+    content: "▶";
+    font-size: 18px;
+    color: white;
+  }
+
+  .select{
+    margin: auto;
+  }
+
+  .sound-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    font-size: 20px;
+  }
+
+          /* Full-screen loading screen with logo */
+          #loadingScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.671);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        #loadingScreen img {
+            width: 150px; /* Adjust logo size */
+            animation: flip 2s ease-in-out infinite; /* Flip animation */
+        }
+
+        /* Logo flipping animation */
+        @keyframes flip {
+            0% {
+                transform: rotateY(0deg);
+            }
+            50% {
+                transform: rotateY(180deg);
+            }
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+
+
+  /* Media Queries for Responsiveness */
+  @media (max-width: 1024px) {
+    .card-container {
+      grid-template-columns: repeat(3, 1fr); /* Adjust to 3 columns */
+    }
+
+    .card {
+      width: 180px;
+      height: 140px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .card-container {
+      grid-template-columns: repeat(2, 1fr); /* Adjust to 2 columns */
+    }
+
+    .card {
+      width: 160px;
+      height: 120px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    h2 {
+      font-size: 20px;
+    }
+
+    .back-button, .sound-btn {
+      font-size: 14px;
+      padding: 6px 12px;
+    }
+
+    .card-container {
+      grid-template-columns: 1fr 1fr ; 
+    }
+
+    .card {
+      width: 100%;
+      max-width: 250px;
+      height: 150px;
+    }
+  }
+</style>
+</head>
+<body>
+
+    <!-- Loading Screen with Logo -->
+    <div id="loadingScreen">
+      <img src="/funspot (2).png" alt="Loading Logo">
+  </div>
+<a href="index.html" class="back-button">Back</a>
+<div class="select">
+<h2>Select a Game</h2>
+
+<!-- Sound Control Button -->
+<button id="soundBtn" class="sound-btn">🔊</button>
+
+<div class="card-container">
+  <!-- 10 clickable card images with play button -->
+  <div class="card">
+    <a href="guessbyemoji.html/index.html">
+      <img src="guessbyemoji.html/guess.png" alt="Card 1">
+      <div class="play-button"></div>
+    </a>
+  </div>
+  <div class="card">
+    <a href="2048game.html/index.html">
+      <img src="2048game.html/2048.jpeg" alt="Card 2">
+      <div class="play-button"></div>
+    </a>
+  </div>
+  <div class="card">
+    <a href="maze.html/index.html">
+      <img src="maze.html/maze.png" alt="Card 3">
+      <div class="play-button"></div>
+    </a>
+  </div>
+  <div class="card">
+    <a href="SNAKEGAME/index.html">
+      <img src="SNAKEGAME/gamesnake.jpeg" alt="Card 4">
+      <div class="play-button"></div>
+    </a>
+  </div>
+  <div class="card">
+    <a href="/paint/index.html">
+      <img src="/paint/logo.png" alt="Card 5">
+      <div class="play-button"></div>
+    </a>
+  </div>
+  <div class="card">
+    <a href="tic-tac/index.html">
+      <img src="/tic-tac/tictac.jpeg" alt="Card 6">
+      <div class="play-button"></div>
+    </a>
+  </div>
+  <div class="card">
+    <a href="/scramble/index.html">
+      <img src="/scramble/scramble-logo.png" alt="Card 7">
+      <div class="play-button"></div>
+    </a>
+  </div>
+  <div class="card">
+    <a href="/rock-paper/index.html">
+      <img src="/rock-paper/logo-paper.png" alt="Card 8">
+      <div class="play-button"></div>
+    </a>
+  </div>
+  <div class="card">
+    <a href="piano/index.html">
+      <img src="piano/logo-piano.jpeg" alt="Card 9">
+      <div class="play-button"></div>
+    </a>
+  </div>
+  <div class="card">
+    <a href="/colorguess/index.html">
+      <img src="/colorguess/color-logo.jpeg" alt="Card 10">
+      <div class="play-button"></div>
+    </a>
+  </div>
+</div>
+</div>
+
+
+<!-- Background Audio -->
+<audio id="bgAudio" loop>
+    <source src="/music.mp3" type="audio/mp3">
+    Your browser does not support the audio tag.
+</audio>
+
+<script>
+// Sound control button and audio element
+const soundBtn = document.getElementById('soundBtn');
+const bgAudio = document.getElementById('bgAudio');
+
+// Check for sound state in localStorage
+const setSoundState = () => {
+    const soundState = localStorage.getItem('soundState');
+    if (soundState === 'off') {
+        bgAudio.pause();
+        soundBtn.textContent = '🔊 ';
+    } else {
+        bgAudio.play();
+        soundBtn.textContent = '🔇 ';
+    }
+};
+
+// Set initial sound state
+setSoundState();
+
+// Toggle sound on button click and save state
+soundBtn.addEventListener('click', () => {
+    if (bgAudio.paused) {
+        bgAudio.play();
+        soundBtn.textContent = '🔊';
+        localStorage.setItem('soundState', 'on');
+    } else {
+        bgAudio.pause();
+        soundBtn.textContent = '🔇 ';
+        localStorage.setItem('soundState', 'off');
+    }
+});
+
+ // Hide loading screen after 2 seconds
+ window.onload = function() {
+            setTimeout(function() {
+                loadingScreen.style.display = 'none'; // Hide the loading screen
+            }, 1000); // Adjust time as necessary
+        };
+</script>
+
+</body>
+</html>

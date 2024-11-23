@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="styles.css">
+<style>
+  .menu-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .menu-button:hover {
+    background-color: #555;
+  }
+</style>
+</head>
+<body>
+<a href="/select.html" class="menu-button">Menu</a>
+  <div class="container">
+    <h1>Tic Tac Toe</h1>
+    <div class="board">
+      <div class="cell" data-index="0"></div>
+      <div class="cell" data-index="1"></div>
+      <div class="cell" data-index="2"></div>
+      <div class="cell" data-index="3"></div>
+      <div class="cell" data-index="4"></div>
+      <div class="cell" data-index="5"></div>
+      <div class="cell" data-index="6"></div>
+      <div class="cell" data-index="7"></div>
+      <div class="cell" data-index="8"></div>
+    </div>
+    <div class="game-info">
+      <h2 id="game-status">Player X's turn</h2>
+      <button id="restart-btn">Restart Game</button>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FUNSPOT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+  
+        
+</head>
+<body>
+
+    <video id="bgVideo" autoplay muted loop>
+        <source src="/bg-light.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <audio id="bgAudio" loop>
+        <source src="music.mp3" type="audio/mp3">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <nav class="navbar">
+        
+        <img src="/colorguess/color-logo.jpeg" alt="Logo" class="logo">
+        <div class="right">
+            <button id="soundBtn">🔊</button>
+            <button id="modeSwitch" class="modeSwitch">🌞</button>
+            
+                <div id="menuicon" class="menu-icon">☰</div>
+                <div id="userIcon">
+                    <!-- <i class="fas fa-user"></i> -->
+                    <a href="/select-index.html" class="back-button">Back</a>
+                    <span id="usernameText">Username</span>
+                    <button id="logOutbtn" onclick="logoutUser()">Logout</button>
+                </div>
+            
+        </div>
+    </nav>
+    <h1>The RGB Color Guessing Game
+        <br> 
+        <span id="colorDisplay">RGB</span>
+    </h1>
+    <div id="stripe">
+        <button id="reset">New Colors</button>
+        <span id="message"></span>
+        <button id="easyButton">Easy</button>
+        <button id="hardButton" class="selected">Hard</button>
+    </div>
+
+    <div id="container">
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+        <div class="square"></div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+
+    <script>
+        const bgVideo = document.getElementById('bgVideo');
+        const bgAudio = document.getElementById('bgAudio');
+        const modeSwitch = document.getElementById('modeSwitch');
+        const soundBtn = document.getElementById('soundBtn');
+    
+        function setBackgroundVideo() {
+            bgVideo.src = document.body.classList.contains('dark-mode') ? '/bg-dark.mp4' : '/bg-light.mp4';
+            bgVideo.load();
+        }
+    
+        setBackgroundVideo();
+        window.addEventListener('resize', setBackgroundVideo);
+    
+        const setSoundState = () => {
+            const soundState = localStorage.getItem('soundState');
+            if (soundState === 'off') {
+                bgVideo.muted = true;
+                bgAudio.pause();
+                soundBtn.textContent = '🔊';
+            } else {
+                bgVideo.muted = false;
+                bgAudio.play();
+                soundBtn.textContent = '🔇';
+            }
+        };
+    
+        setSoundState();
+    
+        modeSwitch.addEventListener('click', () => {
+            const isDarkMode = document.body.classList.toggle('dark-mode');
+            modeSwitch.textContent = isDarkMode ? '🌙' : '🌞';
+            setBackgroundVideo();
+        });
+    
+        soundBtn.addEventListener('click', () => {
+            if (bgVideo.muted && bgAudio.paused) {
+                bgVideo.muted = false;
+                bgAudio.play();
+                soundBtn.textContent = '🔊';
+                localStorage.setItem('soundState', 'on');
+            } else {
+                bgVideo.muted = true;
+                bgAudio.pause();
+                soundBtn.textContent = '🔇';
+                localStorage.setItem('soundState', 'off');
+            }
+        });
+        const menuIcon = document.getElementById('menuicon');
+        const userIcon = document.getElementById('userIcon');
+
+        menuIcon.addEventListener('click', () => {
+            // Toggle the display style
+            userIcon.style.display = userIcon.style.display === 'none' || userIcon.style.display === '' ? 'flex' : 'none';
+        });
+
+        function logoutUser() {
+            console.log('User logged out');
+            // Add logout logic here
+        }
+        const firebaseConfig = {
+            apiKey: "AIzaSyBQEJc9Z2BJ3wc3KWYPMjUUuYirpAsr2MU",
+            authDomain: "funspot-game.firebaseapp.com",
+            projectId: "funspot-game",
+            storageBucket: "funspot-game.appspot.com",
+            messagingSenderId: "941617410081",
+            appId: "1:941617410081:web:3ac5f684bdf9c910f7b360"
+        };
+    
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    
+        document.addEventListener("DOMContentLoaded", () => {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    loadUserProfile(user.uid);
+                } else {
+                    window.location.href = "user.html";
+                }
+            });
+        });
+    
+        function loadUserProfile(uid) {
+            const userRef = db.collection("users").doc(uid);
+            userRef.get().then(doc => {
+                if (doc.exists) {
+                    const userData = doc.data();
+                    const usernameText = document.getElementById("usernameText");
+    
+                    if (userData.username) {
+                        usernameText.textContent = userData.username;
+                    }
+                }
+            });
+        }
+    
+        function logoutUser() {
+            auth.signOut().then(() => {
+                window.location.href = "login.html";
+            });
+        }
+// game
+var numSquares = 6;
+var colors = generateRandomColors(numSquares);
+var squares = document.querySelectorAll(".square");
+var pickedColor = randomColorG();
+var colorDisplay = document.querySelector("#colorDisplay");
+var messageDisplay = document.querySelector("#message");
+var h1 = document.querySelector("h1");
+var resetButton = document.querySelector("#reset");
+var easyBtn = document.querySelector("#easyButton");
+var hardBtn = document.querySelector("#hardButton");
+
+
+easyBtn.addEventListener("click", function(){
+	//highlight button to show selected
+	hardBtn.classList.remove("selected");
+	easyBtn.classList.add("selected");
+	//set number of squares to 3
+	numSquares = 3;
+	//change colors to 3
+	colors = generateRandomColors(numSquares);
+	//reset winning color
+	pickedColor = randomColorG();
+	//change display to show new picked color
+	colorDisplay.textContent = pickedColor;
+	//loop through 3 squares and reset colors while displaying none for squares without new reset colors
+	for(var i = 0; i < squares.length; i++){
+		if(colors[i]){
+			squares[i].style.background = colors[i];
+		} else {
+			squares[i].style.display = "none";
+		}
+	}
+});
+
+hardBtn.addEventListener("click", function(){
+	easyBtn.classList.remove("selected");
+	hardBtn.classList.add("selected");
+	numSquares = 6;
+	colors = generateRandomColors(numSquares);
+	pickedColor = randomColorG();
+	colorDisplay.textContent = pickedColor;
+	for(var i = 0; i < squares.length; i++){
+		squares[i].style.backgroundColor = colors[i];
+		squares[i].style.display = "block";
+	}
+});
+
+resetButton.addEventListener("click", function(){
+	//generate all new colors
+	colors = generateRandomColors(numSquares);
+	//pick a new random color from array
+	pickedColor = randomColorG();
+	//change colorDisplay to match picked color
+	colorDisplay.textContent = pickedColor;
+	resetButton.textContent = "New Colors";
+	messageDisplay.textContent = "";
+	//change colors of squares
+	for(var i = 0; i < squares.length; i++){
+		squares[i].style.backgroundColor = colors[i];
+	}
+	//set winning color highlight back to default
+	h1.style.background = "steelblue"; 
+})
+
+colorDisplay.textContent = pickedColor;
+
+for(var i = 0; i < squares.length; i++) {
+	//add initial colors to squares
+	squares[i].style.backgroundColor = colors[i];
+	//add click listeners to squares
+	squares[i].addEventListener("click", function(){
+		//grab color of clicked square
+		var clickedColor = this.style.backgroundColor;
+		//compare color to pickedColor
+		console.log(clickedColor, pickedColor);
+		if(clickedColor === pickedColor){
+			messageDisplay.textContent = "Correct!";
+			resetButton.textContent = "Play Again?";
+			changeColors(clickedColor);
+			h1.style.background = clickedColor;
+		}	else {
+			this.style.backgroundColor = "#232323";
+			messageDisplay.textContent = "Try Again";
+		}
+		});
+}
+
+function changeColors(colorz){
+	//loop through all squares
+	for(var i = 0; i < squares.length; i++){
+		//change each color to match given color
+		squares[i].style.background = colorz;
+	}	
+}
+
+function randomColorG(){
+	//pick a random number
+	var random = Math.floor(Math.random() * colors.length)
+	return colors[random];
+}
+
+function generateRandomColors(genColor){
+	//make an array
+	var arr = []
+	//repeat num times
+	for(var i = 0; i < genColor; i++){
+	// get random color and push into array
+		arr.push(randomColor())
+	}
+	//return that array
+	return arr;
+}
+
+function randomColor(){
+	//pick a "red" from 0 - 255
+	var r = Math.floor(Math.random() * 256);
+	//pick a "green" from 0 - 255
+	var g = Math.floor(Math.random() * 256);
+	// pick a "blue" from 0 - 255
+	var b = Math.floor(Math.random() * 256);
+	return "rgb(" + r +", " + g +", " + b +")";
+}
+
+
+        </script>
+        <!-- <script src="script.js"></script> -->
+    
+</body>
+</html>
