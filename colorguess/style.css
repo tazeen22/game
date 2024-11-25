@@ -54,7 +54,7 @@ body {
             color: #fff;
             position: relative;
             z-index: 10;
-            height: 80px;
+            height: 40px;
         }
 
         .navbar .left, .navbar .right {
