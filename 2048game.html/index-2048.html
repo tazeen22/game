@@ -406,21 +406,11 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <script>
-        const bgVideo = document.getElementById('bgVideo');
+        
         const bgAudio = document.getElementById('bgAudio');
         const modeSwitch = document.getElementById('modeSwitch');
         const soundBtn = document.getElementById('soundBtn');
 
-        function setBackgroundVideo() {
-            bgVideo.src = document.body.classList.contains('dark-mode') ? '/bg-dark.mp4' : '/bg-light.mp4';
-            bgVideo.load();
-        }
-
-        setBackgroundVideo();
-        window.addEventListener('resize', setBackgroundVideo);
-
-
-   
         const menuIcon = document.getElementById('menuicon');
         const userIcon = document.getElementById('userIcon');
 
@@ -585,23 +575,17 @@
 
         document.addEventListener("keydown", handleInput);
         initGame();
+        document.getElementById('startGameBtn').addEventListener('click', startGame);
 
-        document.addEventListener("DOMContentLoaded", () => {
-    const instructionsModal = document.getElementById("instructionsModal");
-    const startGameBtn = document.getElementById("startGameBtn");
-
-    startGameBtn.addEventListener("click", () => {
-        instructionsModal.classList.add("modal-hidden");
-        initGame(); // Initialize the game
-    });
-
-    // Prevent user from playing before starting the game
-    window.addEventListener("keydown", (event) => {
-        if (!instructionsModal.classList.contains("modal-hidden")) {
-            event.preventDefault();
-        }
-    });
-});
+function startGame() {
+    // Hide the instructions modal
+    const modal = document.getElementById('instructionsModal');
+    modal.style.visibility = 'hidden';
+    
+    // Initialize game logic here
+    initializeGame();
+}
+ 
 
 
     </script>
