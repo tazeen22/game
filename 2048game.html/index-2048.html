@@ -16,6 +16,7 @@
             position: relative;
             overflow: hidden;
             height: 100vh;
+            background-color: #f2b179;
         }
 
         .top-bar {
@@ -383,17 +384,12 @@
 
         <img src="/2048game.html/images.jpeg" alt="Logo" class="logo">
         <div class="right">
-            <button id="soundBtn">🔊</button>
-            <button id="modeSwitch" class="modeSwitch">🌞</button>
-
+            <a href="/select-index.html" class="back-button">Menu</a>
+        
             <div id="menuicon" class="menu-icon">☰</div>
             <div id="userIcon">
-                <!-- <i class="fas fa-user"></i> -->
                 <span id="usernameText">Username</span>
                 <button id="logOutbtn" onclick="logoutUser()">Logout</button>
-                <a href="/select-index.html" class="back-button">
-                    <Menu></Menu>
-                </a>
             </div>
 
         </div>
@@ -427,40 +423,8 @@
         setBackgroundVideo();
         window.addEventListener('resize', setBackgroundVideo);
 
-        const setSoundState = () => {
-            const soundState = localStorage.getItem('soundState');
-            if (soundState === 'off') {
-                bgVideo.muted = true;
-                bgAudio.pause();
-                soundBtn.textContent = '🔊';
-            } else {
-                bgVideo.muted = false;
-                bgAudio.play();
-                soundBtn.textContent = '🔇';
-            }
-        };
 
-        setSoundState();
-
-        modeSwitch.addEventListener('click', () => {
-            const isDarkMode = document.body.classList.toggle('dark-mode');
-            modeSwitch.textContent = isDarkMode ? '🌙' : '🌞';
-            setBackgroundVideo();
-        });
-
-        soundBtn.addEventListener('click', () => {
-            if (bgVideo.muted && bgAudio.paused) {
-                bgVideo.muted = false;
-                bgAudio.play();
-                soundBtn.textContent = '🔊';
-                localStorage.setItem('soundState', 'on');
-            } else {
-                bgVideo.muted = true;
-                bgAudio.pause();
-                soundBtn.textContent = '🔇';
-                localStorage.setItem('soundState', 'off');
-            }
-        });
+   
         const menuIcon = document.getElementById('menuicon');
         const userIcon = document.getElementById('userIcon');
 
@@ -471,7 +435,7 @@
 
         function logoutUser() {
             console.log('User logged out');
-            // Add logout logic here
+           
         }
         const firebaseConfig = {
             apiKey: "AIzaSyBQEJc9Z2BJ3wc3KWYPMjUUuYirpAsr2MU",

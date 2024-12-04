@@ -171,49 +171,44 @@
             }
         }
 
-        /* Media Queries for Responsiveness */
-  @media (max-width: 1024px) {
-    .card-container {
-      grid-template-columns: repeat(3, 1fr); /* Adjust to 3 columns */
-    }
+       /* Media Queries */
+       @media (max-width: 1024px) {
+            .card-container {
+                grid-template-columns: repeat(3, 1fr);
+            }
 
-    .card {
-      width: 180px;
-      height: 140px;
-    }
-  }
+            #logOutbtn {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+        }
 
-  @media (max-width: 768px) {
-    .card-container {
-      grid-template-columns: repeat(2, 1fr); /* Adjust to 2 columns */
-    }
+        @media (max-width: 768px) {
+            .card-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
 
-    .card {
-      width: 160px;
-      height: 120px;
-    }
-  }
+            #userIcon img {
+                width: 30px;
+                height: 30px;
+            }
+        }
 
-  @media (max-width: 480px) {
-    h2 {
-      font-size: 20px;
-    }
+        @media (max-width: 480px) {
+            .navbar {
+                flex-direction: column;
+                height: auto;
+                text-align: center;
+            }
 
-    .back-button, .sound-btn {
-      font-size: 14px;
-      padding: 6px 12px;
-    }
+            .card-container {
+                grid-template-columns: 1fr;
+            }
 
-    .card-container {
-      grid-template-columns: 1fr 1fr ; 
-    }
-
-    .card {
-      width: 100%;
-      max-width: 250px;
-      height: 150px;
-    }
-  }
+            #logOutbtn {
+                width: 100%;
+            }
+        }
   body {
     /* display: flex; */
     flex-direction: column;
@@ -302,14 +297,17 @@
   .select{
     margin: auto;
   }
+
+  #logOutbtn:hover{
+    border-radius: 20px solid white;
+    background-color: gray;
+    
+  }
     </style>
 </head>
 <body>
 
-    <video id="bgVideo" autoplay muted loop>
-        <source src="/bg-light.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
+ 
 
     <audio id="bgAudio" loop>
         <source src="music.mp3" type="audio/mp3">
@@ -321,7 +319,7 @@
         <div class="right">
             <a href="index.html" class="back-button">Back</a>
             <button id="soundBtn">🔊</button>
-            <button id="modeSwitch" class="modeSwitch">🌞</button>
+  
             <div id="userIcon">
                 <i class="fas fa-user"></i>  <!-- This will display the user icon -->
 
@@ -405,27 +403,16 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
 
     <script>
-        const bgVideo = document.getElementById('bgVideo');
         const bgAudio = document.getElementById('bgAudio');
-        const modeSwitch = document.getElementById('modeSwitch');
         const soundBtn = document.getElementById('soundBtn');
     
-        function setBackgroundVideo() {
-            bgVideo.src = document.body.classList.contains('dark-mode') ? '/bg-dark.mp4' : '/bg-light.mp4';
-            bgVideo.load();
-        }
-    
-        setBackgroundVideo();
-        window.addEventListener('resize', setBackgroundVideo);
-    
+      
         const setSoundState = () => {
             const soundState = localStorage.getItem('soundState');
             if (soundState === 'off') {
-                bgVideo.muted = true;
                 bgAudio.pause();
                 soundBtn.textContent = '🔊';
             } else {
-                bgVideo.muted = false;
                 bgAudio.play();
                 soundBtn.textContent = '🔇';
             }
@@ -433,11 +420,6 @@
     
         setSoundState();
     
-        modeSwitch.addEventListener('click', () => {
-            const isDarkMode = document.body.classList.toggle('dark-mode');
-            modeSwitch.textContent = isDarkMode ? '🌙' : '🌞';
-            setBackgroundVideo();
-        });
     
         soundBtn.addEventListener('click', () => {
             if (bgVideo.muted && bgAudio.paused) {

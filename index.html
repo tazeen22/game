@@ -11,11 +11,11 @@
         body {
             margin: 0;
             font-family: Arial, sans-serif;
-            transition: background-color 0.3s, color 0.3s;
+            /* transition: background-color 0.3s, color 0.3s; */
             position: relative;
             overflow: hidden;
             height: 100vh; 
-            background: #000;
+           
         }
 
         .top-bar {
@@ -86,7 +86,6 @@
         }
 
         .dark-mode {
-            background-color: #121212;
             color: #e0e0e0;
         }
 
@@ -150,8 +149,7 @@
 
         @media (max-width:768px) {
             #userIcon {
-    display: flex
-;
+    display: flex;
     align-items: center;
     position: absolute;
     top: 25px;
@@ -217,10 +215,21 @@
             bgVideo.src = document.body.classList.contains('dark-mode') ? '/bg-dark.mp4' : '/bg-light.mp4';
             bgVideo.load();
         }
-    
+    // Function to set background video based on screen width and dark mode
+    function setBackgroundVideo() {
+            if (window.innerWidth <= 768) {
+                bgVideo.src = document.body.classList.contains('dark-mode') ? '/bg-dark guess.mp4' : '/bg-light  guess.mp4';
+            } else {
+                bgVideo.src = document.body.classList.contains('dark-mode') ? '/bg-dark.mp4' : '/bg-light.mp4';
+            }
+            bgVideo.load();
+        }
+
+        // Set the background video on load and resize
         setBackgroundVideo();
         window.addEventListener('resize', setBackgroundVideo);
-    
+
+   
         const setSoundState = () => {
             const soundState = localStorage.getItem('soundState');
             if (soundState === 'off') {
