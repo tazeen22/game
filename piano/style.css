@@ -6,15 +6,19 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
-body {
+.whole-body {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  background: url(/piano/bg-piano.jpeg.jpg);
+  min-height: 88vh;
+  background: url(/piano/image_2024_12_05T05_38_45_877Z.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom;
+}
+
+img.logo {
+  height: 100%;
 }
 .wrapper {
   padding: 35px 40px;
