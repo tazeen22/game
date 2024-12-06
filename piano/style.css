@@ -1,4 +1,4 @@
-/* Import Google font - Poppins */
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
 * {
   margin: 0;
@@ -11,7 +11,7 @@
   align-items: center;
   justify-content: center;
   min-height: 88vh;
-  background: url(/piano/image_2024_12_05T05_38_45_877Z.png);
+  background: url(image_2024_12_05T05_38_45_877Z.png);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: bottom;

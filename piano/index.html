@@ -237,8 +237,7 @@
   
   <img src="download.jpg" alt="Logo" class="logo">
   <div class="right">
-    <a href="/select-index.html" class="back-button">
-      Menu
+    <a href="/game/select-index.html" class="back-button">      Menu
     </a>
 
     
@@ -299,10 +298,6 @@
       userIcon.style.display = userIcon.style.display === 'none' || userIcon.style.display === '' ? 'flex' : 'none';
     });
 
-    function logoutUser() {
-      console.log('User logged out');
-      // Add logout logic here
-    }
     const firebaseConfig = {
       apiKey: "AIzaSyBQEJc9Z2BJ3wc3KWYPMjUUuYirpAsr2MU",
       authDomain: "funspot-game.firebaseapp.com",
@@ -311,7 +306,7 @@
       messagingSenderId: "941617410081",
       appId: "1:941617410081:web:3ac5f684bdf9c910f7b360"
     };
-
+    
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
     const db = firebase.firestore();
@@ -332,21 +327,25 @@
         if (doc.exists) {
           const userData = doc.data();
           const usernameText = document.getElementById("usernameText");
-
+          
           if (userData.username) {
             usernameText.textContent = userData.username;
           }
         }
       });
     }
-
+    
     function logoutUser() {
-      auth.signOut().then(() => {
-        window.location.href = "/login.html";
-      });
+      console.log('User logged out');
+      function logoutUser() {
+        auth.signOut().then(() => {
+          window.location.href = "/login.html";
+        });
+      }
+      
     }
-
-    // 2048
+    
+    // modal
 
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -355,7 +354,6 @@
 
       startGameBtn.addEventListener("click", () => {
         instructionsModal.classList.add("modal-hidden");
-        initGame(); // Initialize the game
       });
 
       // Prevent user from playing before starting the game
