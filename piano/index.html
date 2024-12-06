@@ -301,7 +301,11 @@
 
     function logoutUser() {
       console.log('User logged out');
-      // Add logout logic here
+       function logoutUser() {
+      auth.signOut().then(() => {
+        window.location.href = "/login.html";
+      });
+       }
     }
     const firebaseConfig = {
       apiKey: "AIzaSyBQEJc9Z2BJ3wc3KWYPMjUUuYirpAsr2MU",
@@ -340,13 +344,9 @@
       });
     }
 
-    function logoutUser() {
-      auth.signOut().then(() => {
-        window.location.href = "/login.html";
-      });
-    }
+   
 
-    // 2048
+    // modal
 
 
     document.addEventListener("DOMContentLoaded", () => {
@@ -355,7 +355,6 @@
 
       startGameBtn.addEventListener("click", () => {
         instructionsModal.classList.add("modal-hidden");
-        initGame(); // Initialize the game
       });
 
       // Prevent user from playing before starting the game
