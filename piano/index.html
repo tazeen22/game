@@ -298,6 +298,14 @@
       userIcon.style.display = userIcon.style.display === 'none' || userIcon.style.display === '' ? 'flex' : 'none';
     });
 
+    function logoutUser() {
+      console.log('User logged out');
+       function logoutUser() {
+      auth.signOut().then(() => {
+        window.location.href = "/login.html";
+      });
+       }
+    }
     const firebaseConfig = {
       apiKey: "AIzaSyBQEJc9Z2BJ3wc3KWYPMjUUuYirpAsr2MU",
       authDomain: "funspot-game.firebaseapp.com",
@@ -333,7 +341,7 @@
           }
         }
       });
-    }
+    } 
     
     function logoutUser() {
       console.log('User logged out');
@@ -345,6 +353,11 @@
       
     }
     
+
+
+   
+
+
     // modal
 
 
