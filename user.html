@@ -232,30 +232,23 @@ function registerUser() {
 
 
         // Login user
-      
         function loginUser() {
-    const email = document.getElementById("login-email").value;
-    const password = document.getElementById("login-password").value;
+            const email = document.getElementById("login-email").value;
+            const password = document.getElementById("login-password").value;
 
-    // Check if email and password fields are filled
-    if (email && password) {
-        // Try to sign in the user with the provided credentials
-        auth.signInWithEmailAndPassword(email, password)
-            .then(() => {
-                // If successful, redirect to index.html and show a success alert
-                alert("Login successful!");
-                window.location.href = "index.html";
-            })
-            .catch(error => {
-                // If there's an error (wrong email or password), show the error message
-                alert("Error: " + error.message);
-            });
-    } else {
-        // If email or password is missing, show an alert for invalid input
-        alert("Invalid input. You must fill all the required fields.");
-    }
-}
-
+            auth.signInWithEmailAndPassword(email, password)
+         
+                .then(() => {
+                    window.location.href = "index.html";
+                })
+                .catch(error => console.log("Error: " + error.message));
+                if(email && password){
+                    alert("Email or password is incorrect")}
+        else{
+            alert("invalid input.You must fill all the required field")
+        }
+                
+        }
     </script>
 </body>
 </html>
