@@ -173,7 +173,7 @@
 <body>
 
     <video  id="bgVideo" autoplay muted loop>
-        <source src="/bg-light.mp4" type="video/mp4">
+        <source src="bg-light.mp4" type="video/mp4">
         Your browser does not support the video tag.
     </video>
 
@@ -212,15 +212,15 @@
         const soundBtn = document.getElementById('soundBtn');
     
         function setBackgroundVideo() {
-            bgVideo.src = document.body.classList.contains('dark-mode') ? '/bg-dark.mp4' : '/bg-light.mp4';
+            bgVideo.src = document.body.classList.contains('dark-mode') ? 'bg-dark.mp4' : 'bg-light.mp4';
             bgVideo.load();
         }
     // Function to set background video based on screen width and dark mode
     function setBackgroundVideo() {
             if (window.innerWidth <= 768) {
-                bgVideo.src = document.body.classList.contains('dark-mode') ? '/bg-dark guess.mp4' : '/bg-light  guess.mp4';
+                bgVideo.src = document.body.classList.contains('dark-mode') ? 'bg-dark guess.mp4' : 'bg-light  guess.mp4';
             } else {
-                bgVideo.src = document.body.classList.contains('dark-mode') ? '/bg-dark.mp4' : '/bg-light.mp4';
+                bgVideo.src = document.body.classList.contains('dark-mode') ? 'bg-dark.mp4' : 'bg-light.mp4';
             }
             bgVideo.load();
         }

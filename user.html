@@ -1,145 +1,113 @@
-            <!--------------------------------TASK-5 ------------------------------------------------>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>login-signup</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Login-Signup</title>
     <style>
-        /* Basic Reset */
-body{
-    display: flex;
-    justify-content: center;
-    height: 100vh;
-    align-items: center;
-    background: url(bg-light\ \ guess.png);
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-}
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('bg-light  guess.png') bottom/cover no-repeat;
+        }
 
         #auth-section {
             background: #fefbe5;
             width: 400px;
             padding: 30px;
-            
             overflow: hidden;
             position: relative;
             display: flex;
+            flex-direction: column;
             justify-content: center;
-        }
-
-        /* Heading */
-        h1 {
-            text-align: center;
-            color: #444;
-            font-size: 1.8em;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         h3 {
-            color: #555;
             text-align: center;
-            margin-bottom: 15px;
+            color: #444;
+            margin-bottom: 20px;
         }
 
-        /* Input Styles */
         .input-group {
             position: relative;
-            margin: 20px 0;
+            margin: 15px 0;
         }
 
         .input-group input {
             width: 100%;
             padding: 10px;
-            padding-left: 40px;
             border: 1px solid #ddd;
-            
-            outline: none;
+            border-radius: 5px;
             font-size: 1em;
-            color: #333;
-            transition: all 0.3s;
+            outline: none;
         }
 
         .input-group label {
             position: absolute;
-            left: 15px;
             top: 50%;
+            left: 15px;
             transform: translateY(-50%);
-            color: #aaa;
             font-size: 0.9em;
+            color: #aaa;
             pointer-events: none;
-            transition: all 0.3s;
         }
 
         .input-group input:focus + label,
         .input-group input:not(:placeholder-shown) + label {
             top: -8px;
-            background: #fff;
+            background: #fefbe5;
             padding: 0 5px;
             font-size: 0.75em;
             color: #ff7e5f;
         }
 
-        /* Button */
         button {
             width: 100%;
             padding: 12px;
-           
-            border: none;
-            
+            background: #8383ef;
+            color: #fff;
             font-size: 1em;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
-            margin-top: 20px;
-            margin-left:30px;
+            transition: background 0.3s;
         }
+
         button:hover {
-    background: #8383ef;
-    border-radius: 20px;
-    color: #ffff;
-}
+            background: #6363df;
+        }
 
-      
-
-        /* Link */
         p {
             text-align: center;
             font-size: 0.9em;
             color: #777;
-            margin-top: 15px;
         }
 
         p a {
-            color:#999992;;
+            color: #8383ef;
             font-weight: bold;
-            cursor: pointer;
             text-decoration: none;
         }
 
-        /* Toggle Sections */
         #login-section, #register-form {
-            opacity: 0;
             display: none;
-            transition: opacity 0.5s ease-in-out;
+            opacity: 0;
+            transition: opacity 0.5s;
         }
 
         #login-section.active, #register-form.active {
             display: block;
             opacity: 1;
         }
-
-        /* Show login by default */
-        #login-section.active {
-            display: block;
-            opacity: 1;
-        }
     </style>
 </head>
 <body>
-
     <div id="auth-section">
-        <!-- Login Form -->
+        <!-- Login Section -->
         <div id="login-section" class="active">
             <h3>Login</h3>
             <div class="input-group">
@@ -154,8 +122,8 @@ body{
             <p>Don't have an account? <a href="#" onclick="toggleSection()">Register</a></p>
         </div>
 
-        <!-- Register Form -->
-        <form id="register-form">
+        <!-- Register Section -->
+        <div id="register-form">
             <h3>Register</h3>
             <div class="input-group">
                 <input type="email" id="register-email" placeholder=" " required>
@@ -163,92 +131,78 @@ body{
             </div>
             <div class="input-group">
                 <input type="text" id="register-username" placeholder=" " required>
-                <label for="register-password">username</label>
+                <label for="register-username">Username</label>
             </div>
             <div class="input-group">
                 <input type="password" id="register-password" placeholder=" " required>
                 <label for="register-password">Password</label>
             </div>
-       
-            <button type="button" onclick="registerUser()">Register</button>
+            <button onclick="registerUser()">Register</button>
             <p>Already have an account? <a href="#" onclick="toggleSection()">Login</a></p>
-        </form>
+        </div>
     </div>
 
-    <!-- Firebase CDN links for SDK version 8 -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-   
-
     <script>
-        // Your Firebase configuration
         const firebaseConfig = {
-    apiKey: "AIzaSyBQEJc9Z2BJ3wc3KWYPMjUUuYirpAsr2MU",
-    authDomain: "funspot-game.firebaseapp.com",
-    projectId: "funspot-game",
-    storageBucket: "funspot-game.firebasestorage.app",
-    messagingSenderId: "941617410081",
-    appId: "1:941617410081:web:3ac5f684bdf9c910f7b360"
-  };
+            apiKey: "AIzaSyBQEJc9Z2BJ3wc3KWYPMjUUuYirpAsr2MU",
+            authDomain: "funspot-game.firebaseapp.com",
+            projectId: "funspot-game",
+            storageBucket: "funspot-game.appspot.com",
+            messagingSenderId: "941617410081",
+            appId: "1:941617410081:web:3ac5f684bdf9c910f7b360"
+        };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.firestore();
 
-        // Toggle between login and register sections
         function toggleSection() {
             document.getElementById("login-section").classList.toggle("active");
             document.getElementById("register-form").classList.toggle("active");
         }
 
+        function registerUser() {
+            const email = document.getElementById("register-email").value;
+            const password = document.getElementById("register-password").value;
+            const username = document.getElementById("register-username").value;
 
-        // Register user
-function registerUser() {
-    const email = document.getElementById("register-email").value;
-    const password = document.getElementById("register-password").value;
-    const username = document.getElementById("register-username").value;
+            if (!email || !password || !username) {
+                alert("All fields are required!");
+                return;
+            }
 
-    auth.createUserWithEmailAndPassword(email, password)
-        .then(cred => {
-            return db.collection("users").doc(cred.user.uid).set({
-                username: username,
-            });
-        })
-        .then(() => {
-            alert("Registration successful!");
-            toggleSection(); // Hide register form and show login form
-            document.getElementById("login-section").classList.add("active");
-        })
-        .catch(error => console.log("Error: " + error.message))
-        ;
-        if(email && password && username ){
-        alert("user already exist.")}
-        else{
-            alert("Invalid input ,You must fill all the required field")
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(cred => db.collection("users").doc(cred.user.uid).set({ username }))
+                .then(() => {
+                    alert("Registration successful!");
+                    toggleSection();
+                })
+                .catch(error => alert("Error: " + error.message));
         }
+
+        function loginUser() {
+    const email = document.getElementById("login-email").value;
+    const password = document.getElementById("login-password").value;
+
+    auth.signInWithEmailAndPassword(email, password)
+        .then(() => {
+            window.location.href = "index.html";
+        })
+        .catch(error => {
+            // Display alert for invalid email or password
+            alert("Invalid password or email");
+            console.log("Error: " + error.message);
+        });
+
+    if (!email || !password) {
+        alert("Invalid input. You must fill all the required fields");
+    }
 }
 
-
-        // Login user
-        function loginUser() {
-            const email = document.getElementById("login-email").value;
-            const password = document.getElementById("login-password").value;
-
-            auth.signInWithEmailAndPassword(email, password)
-         
-                .then(() => {
-                    window.location.href = "index.html";
-                })
-                .catch(error => console.log("Error: " + error.message));
-                if(email && password){
-                    alert("Email or password is incorrect")}
-        else{
-            alert("invalid input.You must fill all the required field")
-        }
-                
-        }
     </script>
 </body>
 </html>
